@@ -1,0 +1,17 @@
+
+# Dependencies
+node_modules/
+
+# Build files
+build/
+
+# Env files
+.env
+
+# Firebase
+serviceAccountKey.json
+
+# Python
+__pycache__/
+*.pyc
+.venv

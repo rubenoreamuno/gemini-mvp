@@ -1,0 +1,25 @@
+
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/main-465702/gemini-mvp', '.']
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/main-465702/gemini-mvp']
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'gemini-mvp'
+      - '--image=gcr.io/main-465702/gemini-mvp'
+      - '--region=us-central1' # Change to your preferred region
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--set-secrets=FIREBASE_CONFIG=projects/975674340567/secrets/firebase-admin-sa1'
+
+images:
+  - 'gcr.io/main-465702/gemini-mvp'
